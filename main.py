@@ -14,19 +14,10 @@ from dearpygui.core import *
 from dearpygui.simple import *
 
 
-set_main_window_size(540, 720)
-set_global_font_scale(1.25)
-set_theme("Gold")
-
-with window("simple SMS Spam Filter", width=520, height=677):
-    print("GUI is running ...")
-
-start_dearpygui()
-
 def assistant_voix(sortie):
     if sortie != None:
         voix = pyttsx3.init()
-        print("A.I : " + sortie)
+        print("Nanjanai : " + sortie)
         voix.say(sortie)
         voix.runAndWait()
 
@@ -204,6 +195,26 @@ def main():
                 if flaterie[x] in entree.lower():
                     compliment(entree)
 
+set_main_window_size(540, 720)
+set_global_font_scale(1.25)
+set_theme("Gold")
+set_style_window_padding(120,30)
+
+with window("simple SMS Spam Filter", width=520, height=677):
+    print("GUI is running ...")
+    set_window_pos("simple SMS Spam Filter", 0, 0)
+    #add_drawing("logo", width=520, height=290)
+    add_image(name="img",
+              value="logo_nan.png",
+              height=130,
+              width=300)
+    add_spacing(count=30)
+
+    add_button("Nanjanay Open", callback=main)
+
+
+
+start_dearpygui()
 
 if __name__ == '__main__':
     main()
