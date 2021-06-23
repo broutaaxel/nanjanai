@@ -125,6 +125,14 @@ def compliment(entree):
 
         assistant_voix(random.choice(liste_compliment))
 
+def enregistrement_du_nom(entree):
+    if entree != None:
+        element_recup = []
+        prenom_final = "".join(element_recup)
+        for x in entree:
+            element_recup.append(x)
+        name = prenom_final.replace("je", "0")
+        print(name)
 
 
 def sur_le_net(entree):
@@ -166,12 +174,14 @@ def sur_le_net(entree):
                         webbrowser.open("http://www.google.com/search?q="+"+".join(recherche), new = 2)
 
 def main():
-    assistant_voix("Bonjour mon géniteur. Que puis-je faire pour vous ? ")
+    assistant_voix("Bonjour. Je m'appelle Nane janaille, c'est moi qui vais vous servir. Comment vous appelez-vous ? ")
+    #assistant_voix("Bonjour mon géniteur. Que puis-je faire pour vous ? ")
     fermer = ["arrête-toi","tais-toi"]
     ouvrir = ["ouvre","ouvrir"]
     cherche = ["cherche sur youtube","cherche sur google","cherche sur wikipédia","cherche"]
     calculs = ["calcule la somme de","calcule la différence de"," calcule   le produit de","calcule le quotient de","calcule"]
     flaterie = ["complimente moi", "fais-moi des compliment"]
+    nom = ["je m'appelle", "mon nom est", "mon prénom est"]
     actif = True
     while actif:
         if (entree := reconnaissance()) is not None:
@@ -194,8 +204,11 @@ def main():
             for x in range(len(flaterie)):
                 if flaterie[x] in entree.lower():
                     compliment(entree)
+            for x in range(len(nom)):
+                if nom[x] in entree.lower():
+                    enregistrement_du_nom(entree)
 
-set_main_window_size(540, 720)
+"""set_main_window_size(540, 720)
 set_global_font_scale(1.25)
 set_theme("Gold")
 set_style_window_padding(120,30)
@@ -214,7 +227,7 @@ with window("simple SMS Spam Filter", width=520, height=677):
 
 
 
-start_dearpygui()
+start_dearpygui()"""
 
 if __name__ == '__main__':
     main()
