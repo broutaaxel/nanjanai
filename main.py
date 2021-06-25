@@ -20,9 +20,9 @@ cluster = MongoClient("mongodb+srv://nanjanay:1234@cluster0.b1lvw.mongodb.net/cr
 db = cluster["nanjanaydb"]
 collection = db["credentials"]
 
-post = {"id": 0, "name": "jho"}
+"""post = {"name": "jho"}
 
-collection.insert_one(post)
+collection.insert_one(post)"""
 
 def assistant_voix(sortie):
     if sortie != None:
@@ -137,8 +137,17 @@ def compliment(entree):
 
 def enregistrement_du_nom(entree):
     if entree != None:
-        modif = entree.replace("je m'appelle", "")
-        assistant_voix("bonjour " + modif)
+        nom = entree.replace("je m'appelle", "")
+        filter = {"name": nom}
+        finded = []
+        for document in collection.find(filter):
+            finded.append(document)
+
+        if len(finded) != 0:
+            assistant_voix("ça fait plaisir de vous revoir monsieur " + nom)
+        else:
+          collection.insert_one({"name": nom})
+          assistant_voix("Bienvenue Monsieur" + nom + ", je tâcherai de me souvenir de vous la prochaine fois. Je vous ecoute monsieur" + nom )
 
 
 def sur_le_net(entree):
