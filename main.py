@@ -9,10 +9,20 @@ import wolframalpha
 import webbrowser
 import wikipedia
 import random
+from pymongo import MongoClient
+import urllib
 
 from dearpygui.core import *
 from dearpygui.simple import *
 
+
+cluster = MongoClient("mongodb+srv://nanjanay:1234@cluster0.b1lvw.mongodb.net/credentials?retryWrites=true&w=majority")
+db = cluster["nanjanaydb"]
+collection = db["credentials"]
+
+post = {"id": 0, "name": "jho"}
+
+collection.insert_one(post)
 
 def assistant_voix(sortie):
     if sortie != None:
@@ -127,12 +137,8 @@ def compliment(entree):
 
 def enregistrement_du_nom(entree):
     if entree != None:
-        element_recup = []
-        prenom_final = "".join(element_recup)
-        for x in entree:
-            element_recup.append(x)
-        name = prenom_final.replace("je", "0")
-        print(name)
+        modif = entree.replace("je m'appelle", "")
+        assistant_voix("bonjour " + modif)
 
 
 def sur_le_net(entree):
