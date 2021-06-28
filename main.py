@@ -38,7 +38,6 @@ def assistant_voix(sortie):
         voix.say(sortie)
         voix.runAndWait()
 
-
 def internet():
     try:
         urlopen('https://www.google.com', timeout=1)
