@@ -10,15 +10,22 @@ import webbrowser
 import wikipedia
 import random
 from pymongo import MongoClient
+from configparser import ConfigParser
 import urllib
 
 from dearpygui.core import *
 from dearpygui.simple import *
 
 
-cluster = MongoClient("mongodb+srv://nanjanay:1234@cluster0.b1lvw.mongodb.net/credentials?retryWrites=true&w=majority")
-db = cluster["nanjanaydb"]
-collection = db["credentials"]
+""" the portion is for the config file  """
+
+file = 'config.ini'
+config = ConfigParser()
+config.read(file)
+
+cluster = MongoClient(config['credentials']['bdd'])
+db = cluster[config['credentials']['cluster']]
+collection = db[config['credentials']['collection']]
 
 """post = {"name": "jho"}
 
@@ -49,7 +56,7 @@ def reconnaissance():
     with sr.Microphone() as source:
         r.adjust_for_ambient_noise(source)
         r.pause_threshold = 0.7
-        print(".... ")
+        print("... ")
         audio = r.listen(source)
         if internet():
             try:
@@ -144,10 +151,10 @@ def enregistrement_du_nom(entree):
             finded.append(document)
 
         if len(finded) != 0:
-            assistant_voix("ça fait plaisir de vous revoir monsieur " + nom)
+            assistant_voix("ça fait plaisir de vous revoir humain " + nom + ". Que puis-je faire pour vous ?")
         else:
           collection.insert_one({"name": nom})
-          assistant_voix("Bienvenue Monsieur" + nom + ", je tâcherai de me souvenir de vous la prochaine fois. Je vous ecoute monsieur" + nom )
+          assistant_voix("Bienvenue humain" + nom + ", je tâcherai de me souvenir de vous la prochaine fois. Je vous ecoute humain" + nom )
 
 
 def sur_le_net(entree):
@@ -189,8 +196,7 @@ def sur_le_net(entree):
                         webbrowser.open("http://www.google.com/search?q="+"+".join(recherche), new = 2)
 
 def main():
-    assistant_voix("Bonjour. Je m'appelle Nane janaille, c'est moi qui vais vous servir. Comment vous appelez-vous ? ")
-    #assistant_voix("Bonjour mon géniteur. Que puis-je faire pour vous ? ")
+    assistant_voix("Bonjour. Je m'appelle Nanejanaille, c'est moi qui vais vous servir. Comment vous appelez-vous ? ")
     fermer = ["arrête-toi","tais-toi"]
     ouvrir = ["ouvre","ouvrir"]
     cherche = ["cherche sur youtube","cherche sur google","cherche sur wikipédia","cherche"]
@@ -202,7 +208,7 @@ def main():
         if (entree := reconnaissance()) is not None:
             for x in range(len(fermer)):
                 if fermer[x] in entree.lower():
-                    assistant_voix("A bientôt monsieur.")
+                    assistant_voix("A bientôt humain.")
                     actif = False
             for x in range(len(ouvrir)):
                 if ouvrir[x] in entree.lower():
@@ -223,26 +229,7 @@ def main():
                 if nom[x] in entree.lower():
                     enregistrement_du_nom(entree)
 
-"""set_main_window_size(540, 720)
-set_global_font_scale(1.25)
-set_theme("Gold")
-set_style_window_padding(120,30)
 
-with window("simple SMS Spam Filter", width=520, height=677):
-    print("GUI is running ...")
-    set_window_pos("simple SMS Spam Filter", 0, 0)
-    #add_drawing("logo", width=520, height=290)
-    add_image(name="img",
-              value="logo_nan.png",
-              height=130,
-              width=300)
-    add_spacing(count=30)
-
-    add_button("Nanjanay Open", callback=main)
-
-
-
-start_dearpygui()"""
 
 if __name__ == '__main__':
     main()
