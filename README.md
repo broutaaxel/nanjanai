@@ -10,7 +10,7 @@ Voici un petit projet d'assistance vocale avec python. Les fonctionnalités de c
 
 ------ Comment ça marche ? -------    
 
-L'IA te pose des questions et en fonction de tes réponses elle va chercher les mots clefs de ta réponse et activité certaines fonctionnalités. 
+L'IA te poses des questions et en fonction de tes réponses elle va chercher les mots clefs de ta réponse et activité certaines fonctionnalités. 
 Votre nom vous sera demandé au début de la conversation pour qu'elle vous enregistre en base de donnée afin d'avoir une écoute personalisée 
 
 ------ Objectifs ! ------------
